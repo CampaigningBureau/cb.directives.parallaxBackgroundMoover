@@ -9,14 +9,28 @@ ngModule.directive('parallaxBackgroundMoover', ["$window", function($window) {
     _directive.restrict = 'AC';
 
     _directive.link = function($scope, $element, $attrs) {
+        let elementTop = $element.offset().top,
+            windowScrollTop,
+            waitingForTick = false;
+
         function windowDidScroll() {
-            console.log('window');
+            windowScrollTop = (window.pageYOffset || document.scrollTop)  - (document.clientTop || 0);
+
+            if(!waitingForTick) {
+                waitingForTick = true;
+                window.requestAnimationFrame(nextTick);
+            }
         }
 
+        function nextTick() {
+            let scroll = Math.max(0, windowScrollTop - elementTop) * parseFloat($attrs.parallaxBackgroundMoover || 1);
+            $element[0].style.transform = 'translateY('+Math.floor(scroll)+'px)';
+            waitingForTick = false;
+        }
 
-        $window.on('scroll', windowDidScroll);
+        window.addEventListener('scroll', windowDidScroll);
         $scope.$on('$destroy', function() {
-            $window.off('scroll', windowDidScroll);
+            window.removeEventListener('scroll', windowDidScroll);
         });
     };
 
