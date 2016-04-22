@@ -1,6 +1,6 @@
 {
   "name": "cb-directives-parallaxbackgroundmoover",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A simple directive to move divs while scrolling",
   "main": "dist/cb.directives.parallaxbackgroundmoover.js",
   "scripts": {

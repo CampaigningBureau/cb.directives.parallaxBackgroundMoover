@@ -9,7 +9,7 @@ ngModule.directive('parallaxBackgroundMoover', ["$window", function($window) {
     _directive.restrict = 'AC';
 
     _directive.link = function($scope, $element, $attrs) {
-        let elementTop = $element.offset().top,
+        let elementTop,
             windowScrollTop,
             waitingForTick = false;
 
@@ -18,6 +18,7 @@ ngModule.directive('parallaxBackgroundMoover', ["$window", function($window) {
 
             if(!waitingForTick) {
                 waitingForTick = true;
+                elementTop = $element.offset().top;
                 window.requestAnimationFrame(nextTick);
             }
         }
